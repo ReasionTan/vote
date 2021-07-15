@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vote.dao.mapper.VoteCandidateMapper">
+  <resultMap id="BaseResultMap" type="com.vote.model.VoteCandidate">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vote_id" jdbcType="BIGINT" property="voteId" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="poll" jdbcType="INTEGER" property="poll" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <update id="updatePollById">
+    update vote_candidate set poll = poll + 1 where id = #{candidateId}
+  </update>
+
+  <select id="findVoteCandidateByIdCard" resultMap="BaseResultMap">
+      select id, vote_id, id_card, name from vote_candidate where vote_id = #{voteId} and id_card = #{idCard}
+    </select>
+
+  <select id="findCandidateCountByVoteId" resultType="java.lang.Integer">
+    select count(1) from vote_candidate where vote_id = #{voteId}
+  </select>
+
+  <select id="findCandidatesByVoteId" resultMap="BaseResultMap">
+    select id, vote_id, id_card, name, poll from vote_candidate where vote_id = #{voteId} order by poll desc
+  </select>
+
+  <select id="findCandidateListByVoteId" resultType="com.vote.vo.resp.system.CandidateListResp">
+    select id, id_card idCard, name, poll from vote_candidate where vote_id = #{voteId}
+  </select>
+</mapper>

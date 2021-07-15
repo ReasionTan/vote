@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vote.dao.mapper.VoteMapper">
+  <resultMap id="BaseResultMap" type="com.vote.model.Vote">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <update id="updateVoteStatusById">
+    update vote set status = #{status} where id = #{voteId}
+  </update>
+
+  <select id="findVoteByName" resultType="com.vote.model.Vote">
+    select id, name, status from vote where name = #{name}
+  </select>
+</mapper>

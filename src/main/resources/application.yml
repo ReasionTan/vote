@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: vote
+  profiles:
+    active: #spring.profiles.active#
+  jackson:
+    serialization.write_dates_as_timestamps: false
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+
+project:
+
+  cors: #By default CORS are not enabled. Uncomment to enable.
+    allowed-origins: "*"
+    allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+    allowed-headers: "*"
+    exposed-headers:
+    allow-credentials: true
+    max-age: 1800
+
+  swagger:
+    title: 选举投票 API
+    description: 选举投票 API 文档(全局声明,HttpCode 200为成功)
+    version: 0.0.1

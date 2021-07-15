@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vote.dao.mapper.VoteRecordMapper">
+  <resultMap id="BaseResultMap" type="com.vote.model.VoteRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vote_id" jdbcType="BIGINT" property="voteId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="candidate_id" jdbcType="BIGINT" property="candidateId" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="findCountByCandidateId" resultType="java.lang.Integer">
+    select count(1) from vote_record where candidate_id = #{candidateId}
+  </select>
+
+  <select id="findRecordListByCandidateId" resultType="com.vote.vo.resp.system.RecordListResp">
+    select vu.id_card idCard, vu.email from vote_record vr left join vote_user vu on vr.user_id = vu.id where candidate_id = #{candidateId}
+  </select>
+
+  <select id="findRecordByUserId" resultMap="BaseResultMap">
+    select vote_id, user_id, candidate_id from vote_record where vote_id = #{voteId} and user_id = #{userId}
+  </select>
+</mapper>

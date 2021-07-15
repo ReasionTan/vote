@@ -1,0 +1,74 @@
+spring:
+  profiles:
+    active: dev
+    include: swagger
+  devtools:
+    restart:
+      enabled: false
+      additional-paths: src/main/java
+    livereload:
+      enabled: false # we use gulp + BrowserSync for livereload
+  jackson:
+    serialization.indent_output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://192.168.11.144:3306/tb_mall_headline?characterEncoding=utf-8&useSSL=false&serverTimezone=CTT
+    username: dg-mall
+    password: dg-mall.com
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1765000
+      connection-init-sql: 'set names utf8mb4;'
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false
+  freemarker:
+    check-template-location: false
+  redis:
+    cluster:
+      nodes: 192.168.11.171:7001,192.168.11.171:7002,192.168.11.171:7003,192.168.11.171:7004,192.168.11.171:7005,192.168.11.171:7006
+      max-redirects: 5
+    password:
+      pool:
+        max-idle: 200
+        min-idle: 1
+    timeout: 30000
+
+server:
+  port: 8001
+  servlet:
+    context-path: /vote
+
+logging:
+  level:
+    com.vote.dao.mapper: debug
+    ROOT: info
+  config: classpath:config/logback-spring.xml
+
+mybatis:
+  type-aliases-package: com.vote.model
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+mapper:
+  mappers:
+    - com.vote.dao.util.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  #  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  offset-as-page-num: true #将rowBound的offset当做pageNum使用
+
+project:
+  id:
+    workerId: 2
+    datacenterId: 2
